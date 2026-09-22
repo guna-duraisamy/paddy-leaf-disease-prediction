@@ -21,6 +21,8 @@ paddy-leaf-disease-prediction/
 ## Quick start
 
 ```bash
+git clone https://github.com/guna-duraisamy/paddy-leaf-disease-prediction.git
+cd paddy-leaf-disease-prediction
 python -m venv .venv
 .venv\Scripts\activate          # Windows
 pip install -r requirements.txt
@@ -72,6 +74,13 @@ python -m src.predict --model models/paddy_leaf_model_YYYYMMDD_HHMMSS.keras --im
 ## Recommendation labels
 
 The built-in knowledge base covers bacterial leaf blight, brown spot, leaf smut, and healthy leaves. It provides integrated management suggestions and nutrient advice. Update `src/recommendations.py` with region-specific guidance after consulting a crop expert.
+
+## End-to-end workflow
+
+1. Upload a JPG/PNG paddy-leaf photograph.
+2. The app previews it, estimates visible discoloration after simple leaf masking, and runs CNN classification.
+3. It displays confidence, severity category, safe management guidance, and a local history record in `data/predictions.sqlite3` (no image is stored).
+4. It never generates pesticide application rates; use local registration and the product label.
 
 ## Validation
 
