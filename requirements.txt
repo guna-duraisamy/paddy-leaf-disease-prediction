@@ -1,4 +1,4 @@
-tensorflow>=2.15,<2.19
+tensorflow>=2.20,<2.22; python_version < '3.14'
 streamlit>=1.32,<2.40
 pillow>=10.0
 numpy>=1.24

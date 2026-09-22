@@ -43,6 +43,16 @@ dataset/raw/
 
 Use clear, single-leaf JPG/PNG images. Keep the image source and license in `dataset/README.md`; do not commit private or very large datasets.
 
+### Included dataset downloader
+
+The project can download the UCI Rice Leaf Diseases dataset using:
+
+```bash
+python -m src.download_dataset
+```
+
+It is CC BY 4.0 and has 120 images: bacterial leaf blight, brown spot, and leaf smut (40 images each). This model must only predict classes represented in its training dataset. The recommendation catalog also documents other rice diseases, but those diseases need their own labeled image data before they can be added as prediction classes. See the [UCI dataset record](https://archive.ics.uci.edu/dataset/486/rice%C2%B1leaf%C2%B1diseases) for attribution and license.
+
 ## Train
 
 ```bash
@@ -50,6 +60,8 @@ python -m src.train --data-dir dataset/raw --epochs 12 --batch-size 16
 ```
 
 This saves a timestamped Keras model and label map under `models/`. MobileNetV2 ImageNet weights are used by default; the first run may download those weights.
+
+TensorFlow needs Python 3.10–3.13. This computer’s Python 3.14 can run the Streamlit upload interface but cannot install the TensorFlow package used for training. Use the included Python 3.13 virtual environment: `.venv\Scripts\python.exe`.
 
 ## Predict from the command line
 

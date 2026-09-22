@@ -41,6 +41,45 @@ CATALOG: Dict[str, Recommendation] = {
 }
 
 
+def _reference_only(name: str, category: str) -> Recommendation:
+    """Guidance for known rice diseases without a bundled image-training class."""
+    if category == "viral":
+        pesticide = ("There is no curative pesticide for plant viruses; confirm diagnosis and manage the insect vector using locally approved integrated pest management.",)
+    elif category == "nutrient":
+        pesticide = ("Do not apply a pesticide for a nutrient disorder unless a crop expert identifies a separate pest or disease.",)
+    else:
+        pesticide = ("Confirm the disease with a crop expert; use only a locally registered product, if one is recommended, at its label rate.",)
+    return Recommendation(
+        name, "Reference-only guidance: this disease is not a prediction class in the bundled UCI training dataset.", pesticide,
+        ("Base nutrient changes on a soil or tissue test and the crop growth stage.", "Avoid excess nitrogen; use balanced, split nutrient applications."),
+        ("Use clean seed and resistant varieties where available.", "Improve field scouting, sanitation, drainage, and crop-residue management."),
+    )
+
+
+CATALOG.update({
+    "rice_blast": _reference_only("Rice blast", "fungal"),
+    "sheath_blight": _reference_only("Sheath blight", "fungal"),
+    "sheath_rot": _reference_only("Sheath rot", "fungal"),
+    "false_smut": _reference_only("False smut", "fungal"),
+    "leaf_scald": _reference_only("Leaf scald", "fungal"),
+    "narrow_brown_leaf_spot": _reference_only("Narrow brown leaf spot", "fungal"),
+    "bacterial_leaf_streak": _reference_only("Bacterial leaf streak", "bacterial"),
+    "tungro": _reference_only("Rice tungro", "viral"),
+    "grassy_stunt": _reference_only("Rice grassy stunt", "viral"),
+    "ragged_stunt": _reference_only("Rice ragged stunt", "viral"),
+    "bakanae": _reference_only("Bakanae / foot rot", "fungal"),
+    "stem_rot": _reference_only("Stem rot", "fungal"),
+    "bacterial_sheath_brown_rot": _reference_only("Bacterial sheath brown rot", "bacterial"),
+    "bacterial_grain_rot": _reference_only("Bacterial grain rot / panicle blight", "bacterial"),
+    "rice_yellow_dwarf": _reference_only("Rice yellow dwarf", "viral"),
+    "rice_stripe_virus": _reference_only("Rice stripe virus", "viral"),
+    "rice_yellow_mottle_virus": _reference_only("Rice yellow mottle virus", "viral"),
+    "orange_leaf": _reference_only("Orange leaf phytoplasma", "viral"),
+    "khaira_zinc_deficiency": _reference_only("Khaira (zinc deficiency)", "nutrient"),
+    "iron_toxicity": _reference_only("Iron toxicity / bronzing", "nutrient"),
+})
+
+
 def normalize_label(label: str) -> str:
     return label.strip().lower().replace("-", "_").replace(" ", "_")
 

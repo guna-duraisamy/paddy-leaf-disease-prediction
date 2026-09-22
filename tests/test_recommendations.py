@@ -15,6 +15,9 @@ class RecommendationTests(unittest.TestCase):
     def test_unknown_disease_is_safe(self):
         self.assertIn("verify", get_recommendation("new disease").pesticide[0])
 
+    def test_reference_disease_is_marked_not_trained(self):
+        self.assertIn("not a prediction class", get_recommendation("rice blast").summary)
+
 
 if __name__ == "__main__":
     unittest.main()

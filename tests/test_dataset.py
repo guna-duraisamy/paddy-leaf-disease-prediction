@@ -6,9 +6,9 @@ from src.dataset import inspect_dataset
 
 class DatasetTests(unittest.TestCase):
     def test_missing_classes_are_reported(self):
-        template = Path(__file__).resolve().parents[1] / "dataset" / "raw"
-        with self.assertRaisesRegex(ValueError, "Missing class folders"):
-            inspect_dataset(template)
+        missing = Path(__file__).resolve().parents[1] / "dataset" / "not_present"
+        with self.assertRaisesRegex(ValueError, "does not exist"):
+            inspect_dataset(missing)
 
 
 if __name__ == "__main__":

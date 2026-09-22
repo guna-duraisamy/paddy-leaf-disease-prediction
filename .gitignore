@@ -81,6 +81,7 @@ target/
 # Project datasets and trained ML artifacts
 dataset/raw/*
 !dataset/raw/README.md
+dataset/*.zip
 models/*.keras
 models/*.h5
 models/*.labels.json
