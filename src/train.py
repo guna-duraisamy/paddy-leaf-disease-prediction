@@ -7,6 +7,8 @@ from pathlib import Path
 
 import tensorflow as tf
 
+from src.dataset import inspect_dataset
+
 
 def build_model(class_count: int, image_size: int) -> tf.keras.Model:
     base = tf.keras.applications.MobileNetV2(include_top=False, weights="imagenet", input_shape=(image_size, image_size, 3))
@@ -32,6 +34,11 @@ def main() -> None:
     args = parser.parse_args()
     if not args.data_dir.is_dir():
         raise SystemExit(f"Dataset directory not found: {args.data_dir}")
+    try:
+        counts = inspect_dataset(args.data_dir)
+    except ValueError as error:
+        raise SystemExit(str(error)) from error
+    print("Images per class:", counts)
     kwargs = dict(validation_split=0.2, seed=42, image_size=(args.image_size, args.image_size), batch_size=args.batch_size)
     train_ds = tf.keras.utils.image_dataset_from_directory(args.data_dir, subset="training", **kwargs)
     val_ds = tf.keras.utils.image_dataset_from_directory(args.data_dir, subset="validation", **kwargs)
